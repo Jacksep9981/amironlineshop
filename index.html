@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+<title>امیر آنلاین شاپ | خرید اینترنتی</title>
+<style>
+:root {
+  --black:#101010;
+  --dark:#191919;
+  --gold:#d5ad58;
+  --light:#f5f1e8;
+  --white:#fff;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:#f7f6f2;color:#222;
+ font-family:Tahoma,Arial,sans-serif;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+header{
+ background:var(--black);color:white;
+ padding:16px 5%;display:flex;
+ align-items:center;justify-content:space-between;
+ position:sticky;top:0;z-index:5;
+ border-bottom:2px solid var(--gold);
+}
+.brand{font-size:20px;font-weight:bold;color:var(--gold)}
+.brand small{display:block;font-size:10px;color:white;margin-top:5px}
+.cart-button{
+ background:var(--gold);color:#111;
+ border:0;border-radius:8px;padding:11px 15px;
+ font-weight:bold;
+}
+.hero{
+ background:linear-gradient(120deg,#101010,#29231a);
+ color:white;padding:65px 7%;min-height:290px;
+ display:flex;flex-direction:column;justify-content:center;
+}
+.hero span{color:var(--gold);font-size:13px}
+.hero h1{font-size:32px;margin:15px 0}
+.hero p{line-height:2;color:#ddd;font-size:14px}
+.gold-button{
+ background:var(--gold);color:#171717;
+ border:0;border-radius:8px;padding:13px 22px;
+ font-weight:bold;width:max-content;margin-top:10px;
+}
+.features{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:10px;padding:20px 5%;background:white;
+ text-align:center;
+}
+.feature{font-size:12px;line-height:2}
+.feature b{display:block;color:#a17b30}
+main{padding:25px 5%}
+.section-title{
+ font-size:20px;border-right:4px solid var(--gold);
+ padding-right:12px;margin:25px 0;
+}
+.tools{display:flex;gap:9px;margin-bottom:18px}
+.tools input,.tools select{
+ border:1px solid #ddd;border-radius:8px;
+ padding:12px;background:white;min-width:0;
+}
+.tools input{flex:1;width:60%}
+.categories{
+ display:flex;gap:8px;overflow-x:auto;
+ padding-bottom:14px;
+}
+.categories button{
+ white-space:nowrap;border:1px solid #ddd;
+ background:white;border-radius:20px;
+ padding:9px 15px;font-size:12px;
+}
+.categories button.active{
+ background:var(--black);color:var(--gold);
+ border-color:var(--gold);
+}
+.products{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:13px;
+}
+.product{
+ background:white;border-radius:12px;overflow:hidden;
+ box-shadow:0 3px 12px #0000000b;
+}
+.product img{
+ width:100%;height:145px;object-fit:cover;
+ background:#eee;
+}
+.info{padding:11px}
+.info h3{font-size:13px;margin:4px 0 8px}
+.category-label{font-size:10px;color:#888}
+.price{font-size:13px;font-weight:bold;margin:10px 0;color:#9a7025}
+.add{
+ width:100%;background:var(--black);color:var(--gold);
+ border:1px solid var(--gold);border-radius:7px;
+ padding:10px;font-size:11px;
+}
+.empty{text-align:center;grid-column:1/-1;padding:30px}
+footer{
+ background:var(--black);color:white;
+ text-align:center;padding:30px 15px;
+ margin-top:35px;font-size:12px;line-height:2;
+}
+footer strong{color:var(--gold)}
+.modal{
+ display:none;position:fixed;inset:0;background:#0009;
+ z-index:10;justify-content:center;align-items:center;padding:12px;
+}
+.modal.show{display:flex}
+.panel{
+ background:white;border-radius:15px;padding:20px;
+ width:100%;max-width:470px;max-height:90vh;overflow:auto;
+}
+.panel-head{display:flex;justify-content:space-between;align-items:center}
+.panel-head h2{font-size:18px}
+.close{border:0;background:#eee;border-radius:7px;padding:8px}
+.cart-item{
+ display:flex;justify-content:space-between;align-items:center;
+ border-bottom:1px solid #eee;padding:13px 0;gap:8px;
+ font-size:12px;
+}
+.qty button{
+ background:#eee;border:0;border-radius:5px;
+ padding:6px 11px;margin:2px;
+}
+.total{font-size:17px;font-weight:bold;margin:20px 0;color:#9a7025}
+.form{display:grid;gap:10px;margin-top:15px}
+.form input,.form textarea{
+ width:100%;padding:12px;border:1px solid #ddd;
+ border-radius:8px;
+}
+.checkout{
+ background:var(--black);color:var(--gold);
+ width:100%;padding:13px;border:0;border-radius:8px;
+}
+.note{font-size:11px;line-height:2;color:#777}
+@media(min-width:650px){
+ .products{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .product img{height:200px}
+ .hero{padding:90px 12%}
+ main{padding:30px 10%}
+}
+@media(min-width:950px){
+ .products{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="brand">
+  امیر آنلاین شاپ
+  <small>AMIR ONLINE SHOP</small>
+ </div>
+ <button class="cart-button" onclick="openCart()">
+  🛒 سبد خرید <span id="count">۰</span>
+ </button>
+</header>
+
+<section class="hero">
+ <span>WELCOME TO AMIR ONLINE SHOP</span>
+ <h1>خریدی متفاوت، انتخابی هوشمندانه</h1>
+ <p>محصولات متنوع، انتخاب‌های جذاب و تجربه خرید آسان در امیر آنلاین شاپ.</p>
+ <button class="gold-button" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
+  مشاهده محصولات
+ </button>
+</section>
+
+<section class="features">
+ <div class="feature">✦<b>تنوع محصولات</b>انتخاب‌های متنوع</div>
+ <div class="feature">◈<b>خرید آسان</b>تجربه ساده</div>
+ <div class="feature">♧<b>پشتیبانی</b>همراه مشتری</div>
+</section>
+
+<main id="shop">
+ <h2 class="section-title">محصولات فروشگاه</h2>
+
+ <div class="tools">
+  <input id="search" placeholder="نام محصول را جستجو کن..." oninput="render()">
+  <select id="sort" onchange="render()">
+   <option value="default">مرتب‌سازی</option>
+   <option value="low">ارزان‌ترین</option>
+   <option value="high">گران‌ترین</option>
+  </select>
+ </div>
+
+ <div class="categories" id="categories"></div>
+ <div class="products" id="products"></div>
+</main>
+
+<footer>
+ <strong>امیر آنلاین شاپ</strong>
+ <p>از انتخاب تا خرید، همراه شما هستیم.</p>
+ <p>تمامی حقوق محفوظ است © ۱۴۰۵</p>
+</footer>
+
+<div class="modal" id="cartModal" onclick="outsideClose(event)">
+ <div class="panel">
+  <div class="panel-head">
+   <h2>سبد خرید شما</h2>
+   <button class="close" onclick="closeCart()">✕</button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="total" id="total"></div>
+  <button class="checkout" onclick="showCheckout()">ثبت سفارش</button>
+
+  <div id="checkoutForm" style="display:none">
+   <h3>اطلاعات سفارش</h3>
+   <form class="form" onsubmit="submitOrder(event)">
+    <input id="buyer" placeholder="نام و نام خانوادگی" required>
+    <input id="phone" placeholder="شماره موبایل" type="tel"
+     pattern="09[0-9]{9}" title="شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود" required>
+    <textarea id="address" placeholder="آدرس کامل تحویل سفارش" rows="3" required></textarea>
+    <button class="checkout" type="submit">تأیید اطلاعات سفارش</button>
+   </form>
+   <p class="note">این نسخه آزمایشی است. سفارش هنوز به فروشنده ارسال نمی‌شود و پرداخت آنلاین فعال نیست.</p>
+  </div>
+ </div>
+</div>
+
+<script>
+const productsData = [
+ {id:1,name:"کفش اسپرت",category:"پوشاک",price:1500000,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600"},
+ {id:2,name:"ساعت مچی",category:"اکسسوری",price:2200000,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600"},
+ {id:3,name:"کیف روزمره",category:"اکسسوری",price:950000,img:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600"},
+ {id:4,name:"هدفون",category:"دیجیتال",price:1800000,img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600"},
+ {id:5,name:"عینک آفتابی",category:"اکسسوری",price:650000,img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600"},
+ {id:6,name:"کوله پشتی",category:"کیف و کوله",price:1250000,img:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600"}
+];
+
+let cart=[];
+try{cart=JSON.parse(localStorage.getItem("amirCart")||"[]");}catch(e){cart=[];}
+let activeCategory="همه";
+
+function money(n){
+ return n.toLocaleString("fa-IR")+" تومان";
+}
+function save(){
+ localStorage.setItem("amirCart",JSON.stringify(cart));
+ updateCount();
+}
+function updateCount(){
+ document.getElementById("count").textContent=
+ cart.reduce((s,x)=>s+x.qty,0).toLocaleString("fa-IR");
+}
+function renderCategories(){
+ let cats=["همه",...new Set(productsData.map(p=>p.category))];
+ document.getElementById("categories").innerHTML=cats.map(c=>
+ `<button class="${activeCategory===c?'active':''}" onclick="activeCategory='${c}';render()">${c}</button>`
+ ).join("");
+}
+function render(){
+ renderCategories();
+ let q=document.getElementById("search").value.trim().toLowerCase();
+ let items=productsData.filter(p=>
+ (activeCategory==="همه"||p.category===activeCategory)&&
+ p.name.toLowerCase().includes(q)
+ );
+ let sort=document.getElementById("sort").value;
+ if(sort==="low")items.sort((a,b)=>a.price-b.price);
+ if(sort==="high")items.sort((a,b)=>b.price-a.price);
+
+ document.getElementById("products").innerHTML=items.map(p=>`
+ <article class="product">
+ <img src="${p.img}" alt="${p.name}" loading="lazy">
+ <div class="info">
+ <span class="category-label">${p.category}</span>
+ <h3>${p.name}</h3>
+ <div class="price">${money(p.price)}</div>
+ <button class="add" onclick="add(${p.id})">افزودن به سبد خرید</button>
+ </div>
+ </article>`).join("")||'<p class="empty">محصولی پیدا نشد.</p>';
+}
+function add(id){
+ let item=cart.find(x=>x.id===id);
+ if(item)item.qty++;
+ else cart.push({id,qty:1});
+ save();
+ alert("محصول به سبد خرید اضافه شد.");
+}
+function openCart(){
+ renderCart();
+ document.getElementById("cartModal").classList.add("show");
+}
+function closeCart(){
+ document.getElementById("cartModal").classList.remove("show");
+}
+function outsideClose(e){
+ if(e.target.id==="cartModal")closeCart();
+}
+function renderCart(){
+ let box=document.getElementById("cartItems");
+ if(!cart.length)box.innerHTML="<p>سبد خرید خالی است.</p>";
+ else box.innerHTML=cart.map(x=>{
+ let p=productsData.find(y=>y.id===x.id);
+ if(!p)return "";
+ return `<div class="cart-item">
+ <div><b>${p.name}</b><br>${money(p.price)}<br>تعداد: ${x.qty}</div>
+ <div class="qty">
+ <button onclick="changeQty(${x.id},1)">+</button>
+ <button onclick="changeQty(${x.id},-1)">−</button>
+ </div>
+ </div>`;
+ }).join("");
+ let sum=cart.reduce((s,x)=>{
+ let p=productsData.find(y=>y.id===x.id);
+ return s+(p?p.price*x.qty:0);
+ },0);
+ document.getElementById("total").textContent="مجموع: "+money(sum);
+}
+function changeQty(id,n){
+ let x=cart.find(p=>p.id===id);
+ if(x)x.qty+=n;
+ cart=cart.filter(p=>p.qty>0);
+ save();
+ renderCart();
+}
+function showCheckout(){
+ if(!cart.length){alert("سبد خرید خالی است.");return;}
+ document.getElementById("checkoutForm").style.display="block";
+}
+function submitOrder(e){
+ e.preventDefault();
+ let lines=cart.map(x=>{
+ let p=productsData.find(y=>y.id===x.id);
+ return p.name+" × "+x.qty+" = "+money(p.price*x.qty);
+ }).join("\n");
+ let sum=cart.reduce((s,x)=>s+productsData.find(p=>p.id===x.id).price*x.qty,0);
+ let message="سفارش امیر آنلاین شاپ\n"+
+ "نام: "+document.getElementById("buyer").value+"\n"+
+ "موبایل: "+document.getElementById("phone").value+"\n"+
+ "آدرس: "+document.getElementById("address").value+"\n"+
+ lines+"\nمجموع: "+money(sum);
+ alert("این سفارش فعلاً فقط در مرورگر آماده شده و برای فروشنده ارسال نشده است.\n\n"+message);
+}
+render();
+updateCount();
+</script>
+</body>
+</html>
